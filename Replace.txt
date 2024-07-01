@@ -1,0 +1,76 @@
+
+
+%{
+
+#include <stdio.h>
+
+#include <string.h>
+
+
+
+#define MAX_BUFFER_SIZE 1024
+
+
+
+%}
+
+
+
+%%
+
+"old_word"    { fprintf(yyout, "new_word"); }
+
+.|\n          { fprintf(yyout, "%s", yytext); }
+
+%%
+
+
+
+int main(int argc, char *argv[]) {
+
+    if (argc != 4) {
+
+        fprintf(stderr, "Usage: %s input_file output_file\n", argv[0]);
+
+        return 1;
+
+    }
+
+
+
+    FILE *inputFile = fopen(argv[2], "r");
+
+    FILE *outputFile = fopen(argv[3], "w");
+
+
+
+    if (!inputFile || !outputFile) {
+
+        perror("Error opening files");
+
+        return 1;
+
+    }
+
+
+
+    yyin = inputFile;
+
+    yyout = outputFile;
+
+
+
+    yylex();
+
+
+
+    fclose(inputFile);
+
+    fclose(outputFile);
+
+
+
+    return 0;
+
+}
+

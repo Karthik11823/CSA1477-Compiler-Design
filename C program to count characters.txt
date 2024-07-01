@@ -1,0 +1,43 @@
+int main() {
+
+ FILE *file;
+
+ char ch;
+
+ int charCount = 0, wordCount = 0, lineCount = 0, inWord = 0;
+
+ file = fopen("input.txt", "r");
+
+ if (file == NULL) {
+
+ printf("Error opening the file.\n");
+
+ return 0;
+
+ }
+
+ while ((ch = fgetc(file)) != EOF) {
+
+ charCount++;
+
+ if (ch == '\n') {
+
+ lineCount++;
+
+ }
+
+ if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch == '\v' || ch == '\f') {
+
+ inWord = 0;
+
+ }
+
+ else if (inWord == 0) {
+
+ inWord = 1;
+
+ wordCount++;
+
+ }
+
+ }
